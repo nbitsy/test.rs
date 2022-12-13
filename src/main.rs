@@ -1,8 +1,21 @@
+extern crate core;
 
-mod tests;
+use log;
+use bwserver;
 
 fn main() {
-    println!("Hello, world!");
-    tests::var_test::test_var();
-    tests::var_test::test_mut_var();
+    let args = std::env::args();
+    for (i, x) in args.enumerate() {
+        println!("[{}] {}", i, x);
+    }
+
+    let logfile = "config/log4rs.yaml";
+    if let Some(_r) = bwserver::util::l4rs::init_file(logfile) {
+        // do nothing
+    } else {
+        panic!("Init log file {:?} error.", logfile);
+    }
+
+    log::info!("hello");
+    log::error!("world");
 }
