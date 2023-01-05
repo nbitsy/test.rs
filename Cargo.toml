@@ -3,9 +3,8 @@ name = "rust_test"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 bwserver = { path = "../bwserver", feature = "full" }
-log4rs = "1.2.0"
+procmacro = { path = "../procmacro", feature = "full" }
 log = "0.4.17"
+proc-macro3 = "0.1.1"

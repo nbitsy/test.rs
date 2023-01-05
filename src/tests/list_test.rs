@@ -1,6 +1,9 @@
 use std::borrow::{Borrow, BorrowMut};
 use std::fmt::{Debug, Display};
 use std::ops::{Deref, DerefMut};
+use std::ptr::NonNull;
+use std::rc::Rc;
+use crate::tests::list_test::EList::{Nil, Value};
 
 #[derive(Debug)]
 struct List<T> {
@@ -86,4 +89,55 @@ fn test_list_base() {
     while let Some(v) = l.pop() {
         println!("popd {:?} len: {:?}", v, l.count());
     }
+}
+
+#[derive(Debug)]
+enum EList<T> {
+    Value(T, Box<EList<T>>),
+    Nil,
+}
+
+#[test]
+fn test_elist() {
+    let l = Value(1, Box::new(Value(2, Box::new(Value(3, Box::new(Nil))))));
+    println!("{:?}", l);
+}
+
+#[derive(Debug)]
+struct LinkedList<T> {
+    head: Option<NonNull<Node<T>>>,
+    tail: Option<NonNull<Node<T>>>,
+    size: usize,
+}
+
+#[derive(Debug)]
+struct Node<T> {
+    next: Option<NonNull<Node<T>>>,
+    prev: Option<NonNull<Node<T>>>,
+    value: T,
+}
+
+impl<T> LinkedList<T> {
+    pub fn new() -> Self {
+        return Self { head: None, tail: None, size: 0 };
+    }
+
+    fn push_back_node(&mut self, mut node: Box<Node<T>>) {
+    }
+
+    fn push_front_node(&mut self, mut node: Box<Node<T>>) {}
+
+    fn pop_back_node(&mut self) -> Option<Box<Node<T>>> {
+        None
+    }
+
+    fn pop_front_node(&mut self) -> Option<Box<Node<T>>> {
+        None
+    }
+}
+
+#[test]
+fn test_real_list() {
+    let mut l = LinkedList::<i32>::new();
+    println!("{:?}", l);
 }

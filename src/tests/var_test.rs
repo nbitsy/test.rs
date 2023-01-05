@@ -1,3 +1,11 @@
+use std::collections::LinkedList;
+
+#[test]
+fn test_list() {
+    let l = LinkedList::<i32>::new();
+}
+
+
 /// 不可变变量和不可变变量的隐藏
 pub fn test_var() {
     let x = 5;
