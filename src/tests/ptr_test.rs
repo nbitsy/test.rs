@@ -1,3 +1,4 @@
+use std::cell::{Cell, RefCell, RefMut};
 use std::ptr::NonNull;
 
 #[derive(Debug)]
@@ -89,3 +90,27 @@ fn test_ptr_base2() {
     println!("LinkedList: {:?}", l);
 }
 
+#[test]
+fn test_ptr_raw() {
+    //#[repr(packed)] // 取消所有对齐
+    //#[repr(C)] // 按C的方式进行对齐
+    #[repr(align(16))] // 强烈要求对齐到16字节
+    struct UnalignedData {
+        byte: u8,
+        int: i32,
+    }
+
+    unsafe {
+        let i = 100;
+        println!("i: {:?}", i);
+        std::ptr::write(&i as *const i32 as *mut i32, 99);
+        println!("i: {:?}", i);
+        std::ptr::write_unaligned(&i as *const i32 as *mut i32, 999999);
+        println!("i: {:?}", i);
+    }
+
+    unsafe {
+        let ud = UnalignedData { byte: 99, int: 99 };
+        println!("ud: {:?} size: {:?}", ud.byte, std::mem::size_of_val(&ud));
+    }
+}

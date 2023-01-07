@@ -22,3 +22,7 @@ pub mod deref_test;
 pub mod ptr_test;
 pub mod cfg_test;
 pub mod box_test;
+pub mod sized_test;
+mod phantom_test;
+mod lifetime_test;
+mod mut_test;
